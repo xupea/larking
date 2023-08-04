@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+.left {
+  width: 20%;
+  flex-grow: 2;
+  justify-content: flex-start;
+}
+
+.window-controls-container {
+  width: 70px;
+
+  display: flex;
+  flex-grow: 0;
+  flex-shrink: 0;
+  text-align: center;
+  z-index: 3000;
+  /* -webkit-app-region: none; */
+  height: 100%;
+}
