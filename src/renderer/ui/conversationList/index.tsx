@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AutoSizer, List } from 'react-virtualized';
-import { Avatar, List, message } from 'antd';
+import { Avatar, message } from 'antd';
 import styles from './index.module.css';
 
 interface UserItem {
@@ -21,7 +21,6 @@ interface UserItem {
 
 const fakeDataUrl =
   'https://randomuser.me/api/?results=20&inc=name,gender,email,nat,picture&noinfo';
-const ContainerHeight = 400;
 
 const ConversationList: React.FC = () => {
   const [data, setData] = useState<UserItem[]>([]);

@@ -10,25 +10,21 @@
  */
 import path from 'path';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
-import { autoUpdater } from 'electron-updater';
-import log from 'electron-log';
+import { AsarUpdater } from '@zeromake/electron-asar-updater';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 
-class AppUpdater {
-  constructor() {
-    log.transports.file.level = 'info';
-    autoUpdater.logger = log;
-    autoUpdater.checkForUpdatesAndNotify();
-  }
-}
+const asarUpdater = new AsarUpdater({
+  version_url: 'http://localhost:3000/version.json',
+  resource_path: app.getAppPath(),
+});
 
 let mainWindow: BrowserWindow | null = null;
 
 ipcMain.on('ipc-example', async (event, arg) => {
-  const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
+  const msgTemplate = (pingPong: string) => `v${pingPong}`;
   console.log(msgTemplate(arg));
-  event.reply('ipc-example', msgTemplate('pong'));
+  event.reply('ipc-example', msgTemplate(app.getVersion()));
 });
 
 if (process.env.NODE_ENV === 'production') {
@@ -42,6 +38,22 @@ const isDebug =
 if (isDebug) {
   require('electron-debug')();
 }
+
+const updateAsarFile = async (relaunch: boolean) => {
+  // 有更新文件就进行替换逻辑
+  if (await asarUpdater.hasUpgraded()) {
+    await asarUpdater.upgrade(relaunch);
+    // if (relaunch && process.platform !== 'win32') {
+    //   // 非 windows 平台都是可以直接替换文件的，直接使用 electron 的 app.relaunch()
+    //   app.relaunch();
+    // }
+  }
+  app.exit();
+};
+
+const getVersion = () => {
+  return app.getVersion();
+};
 
 const installExtensions = async () => {
   const installer = require('electron-devtools-installer');
@@ -91,7 +103,7 @@ const createWindow = async () => {
 
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 
-  mainWindow.on('ready-to-show', () => {
+  mainWindow.on('ready-to-show', async () => {
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');
     }
@@ -99,7 +111,28 @@ const createWindow = async () => {
       mainWindow.minimize();
     } else {
       mainWindow.show();
+      const [isUpdater, asarInfo] = await asarUpdater.check(getVersion());
+      console.log('isUpdater', isUpdater);
+      console.log(asarInfo);
+      if (isUpdater) {
+        // TODO 通知进行更新
+        if (await asarUpdater.download(asarInfo)) {
+          // TODO 通知需要重启，用户确认
+          // 替换文件，windows 下会启动一个 vbs 脚本进程尝试不停的替换，必须要退出该应用才可以正确的替换
+          console.log('asar is ready to update');
+          // await updateAsarFile(false);
+        } else {
+          // TODO 通知下载更新文件失败
+          console.log('error');
+        }
+      }
     }
+  });
+
+  mainWindow.on('close', (event) => {
+    event.preventDefault();
+
+    updateAsarFile(false);
   });
 
   mainWindow.on('closed', () => {
@@ -114,10 +147,6 @@ const createWindow = async () => {
     shell.openExternal(edata.url);
     return { action: 'deny' };
   });
-
-  // Remove this if your app does not use auto updates
-  // eslint-disable-next-line
-  new AppUpdater();
 };
 
 /**

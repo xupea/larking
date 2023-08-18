@@ -1,0 +1,33 @@
+.action-bar {
+  height: 100%;
+  white-space: nowrap;
+}
+
+.actions-container {
+  margin: 0 auto;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  list-style-type: none;
+}
+
+.action-item {
+  height: 64px;
+  line-height: 64px;
+  font-size: 30px;
+  padding: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-item-inner {
+  line-height: 48px;
+  flex: 1;
+  border-radius: 4px;
+}
+
+.action-item-inner:hover {
+  background-color: red;
+}

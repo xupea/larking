@@ -6,8 +6,10 @@ import RecentVisitHistory from 'renderer/business/resentVisitHistory';
 import QuickAction from 'renderer/business/quickAction';
 import TitleBar from '../titlebar';
 import ConversationList from 'renderer/ui/conversationList';
+import useVersion from 'renderer/hooks/useVersion';
+import ActivityBar from '../activityBar';
 
-const { Header, Sider, Content } = Layout;
+const { Header, Sider, Content, Footer } = Layout;
 
 const headerStyle: React.CSSProperties = {
   color: '#fff',
@@ -44,19 +46,28 @@ const siderStyle2: React.CSSProperties = {
 };
 
 const ClassicLayout: React.FC = () => {
+  const version = useVersion();
+
   return (
     <Layout className={styles.layout}>
       <Header style={headerStyle}>
         <TitleBar />
       </Header>
       <Layout>
-        <Sider width={64} style={siderStyle1}>
-          Sider
+        <div className={styles.demoText}>
+          <div>Hello World</div>
+          <div style={{ fontSize: 34 }}>{version}</div>
+        </div>
+        {/* <Sider width={64} style={siderStyle1}>
+          <ActivityBar />
         </Sider>
         <Sider width={288} style={siderStyle2}>
           <ConversationList />
         </Sider>
-        <Content style={contentStyle}>Content</Content>
+        <Layout style={contentStyle}>
+          <Content style={contentStyle}>Content</Content>
+          <Footer>Footer</Footer>
+        </Layout> */}
       </Layout>
     </Layout>
   );
