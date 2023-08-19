@@ -1,8 +1,8 @@
 const path = require('path');
 const qiniu = require('qiniu');
 
-const accessKey = 'QOsuzRd9w2rwhpD3WOCXUp1FE-GOZohDARFYMidh';
-const secretKey = 'yd3m-8oePDB1WD2MGSsvj8vHtubPD4f4ORp7p42z';
+const accessKey = process.env.ACCESS_KEY;
+const secretKey = process.env.SECRET_KEY;
 
 const mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
 
@@ -62,6 +62,4 @@ exports.default = async function beforePack(context) {
   const uploadToken = putPolicy.uploadToken(mac);
 
   upload(uploadToken, key, asarPath, putExtra);
-
-  console.log('hello before pack', context);
 };
