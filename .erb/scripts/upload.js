@@ -1,8 +1,10 @@
 const path = require('path');
 const qiniu = require('qiniu');
 
-const accessKey = process.env.ACCESS_KEY;
-const secretKey = process.env.SECRET_KEY;
+console.log(process.env);
+
+const accessKey = 'QOsuzRd9w2rwhpD3WOCXUp1FE-GOZohDARFYMidh';
+const secretKey = 'yd3m-8oePDB1WD2MGSsvj8vHtubPD4f4ORp7p42z';
 
 const mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
 
