@@ -15,7 +15,7 @@ import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 
 const asarUpdater = new AsarUpdater({
-  version_url: 'http://localhost:3000/version.json',
+  version_url: 'http://rza9e5agw.hn-bkt.clouddn.com/version.json',
   resource_path: app.getAppPath(),
 });
 

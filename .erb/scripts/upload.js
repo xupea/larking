@@ -1,14 +1,35 @@
 const path = require('path');
+const { writeFileSync, readFileSync } = require('fs');
 const qiniu = require('qiniu');
+const { version } = require('../../release/app/package.json');
 
-const accessKey = process.env.ACCESS_KEY;
-const secretKey = process.env.SECRET_KEY;
+const accessKey = 'QOsuzRd9w2rwhpD3WOCXUp1FE-GOZohDARFYMidh';
+const secretKey = 'yd3m-8oePDB1WD2MGSsvj8vHtubPD4f4ORp7p42z';
 
 const mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
 
-// 文件上传
+const rootPath = path.join(__dirname, '../..');
+const versionPath = path.join(rootPath, 'version.json');
 
-function upload(uploadToken, key, localFile, putExtra) {
+function updateVersion(v) {
+  const data = readFileSync(versionPath);
+
+  const parsedData = JSON.parse(data);
+  parsedData.version = v;
+  writeFileSync(versionPath, JSON.stringify(parsedData, null, 2));
+}
+
+// 文件上传
+function upload(key, localFile) {
+  const putExtra = new qiniu.form_up.PutExtra();
+
+  const options = {
+    scope: `youdu-electron:${key}`,
+  };
+
+  const putPolicy = new qiniu.rs.PutPolicy(options);
+  const uploadToken = putPolicy.uploadToken(mac);
+
   const config = new qiniu.conf.Config();
   const formUploader = new qiniu.form_up.FormUploader(config);
   formUploader.putFile(
@@ -35,6 +56,8 @@ exports.default = async function beforePack(context) {
   const { appInfo } = packager;
   const { productFilename } = appInfo;
 
+  updateVersion(version);
+
   let asarPath = '';
 
   if (process.platform === 'darwin') {
@@ -51,15 +74,11 @@ exports.default = async function beforePack(context) {
     );
   }
 
-  const putExtra = new qiniu.form_up.PutExtra();
-  const key = 'next.asar';
+  const keyAsar = 'next.asar';
 
-  const options = {
-    scope: `youdu-electron:${key}`,
-  };
+  upload(keyAsar, asarPath);
 
-  const putPolicy = new qiniu.rs.PutPolicy(options);
-  const uploadToken = putPolicy.uploadToken(mac);
+  const versionAsar = 'version.json';
 
-  upload(uploadToken, key, asarPath, putExtra);
+  upload(versionAsar, versionPath);
 };
