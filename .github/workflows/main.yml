@@ -7,7 +7,7 @@ on:
 
 jobs:
   build_on_mac:
-    runs-on: macOS-latest
+    runs-on: macos-latest
     steps:
     - uses: actions/checkout@master
     - uses: actions/setup-node@master
@@ -17,6 +17,8 @@ jobs:
       run: npm install
     - name: Build on MacOS
       env:
+        ACCESS_KEY: ${{ vars.ACCESS_KEY }}
+        SECRET_KEY: ${{ vars.SECRET_KEY }}
         ELECTRON: true
         APP_VERSION_NUMBER: 0.5.9
       run: npm run package
