@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    tags:
+      - v1.**
+
+jobs:
+  build_on_mac:
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions/setup-node@master
+      with:
+        node-version: 18.14.2
+    - name: Install dependencies
+      run: npm install
+    - name: Build on MacOS
+      env:
+        ELECTRON: true
+        APP_VERSION_NUMBER: 0.5.9
+      run: npm run package
