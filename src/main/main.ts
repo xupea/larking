@@ -43,13 +43,17 @@ const updateAsarFile = async (relaunch: boolean) => {
   // 有更新文件就进行替换逻辑
   if (await asarUpdater.hasUpgraded()) {
     await asarUpdater.upgrade(relaunch);
-    // if (relaunch && process.platform !== 'win32') {
-    //   // 非 windows 平台都是可以直接替换文件的，直接使用 electron 的 app.relaunch()
-    //   app.relaunch();
-    // }
+    if (relaunch && process.platform !== 'win32') {
+      // 非 windows 平台都是可以直接替换文件的，直接使用 electron 的 app.relaunch()
+      app.relaunch();
+    }
   }
   app.exit();
 };
+
+ipcMain.on('ipc-main', () => {
+  updateAsarFile(true);
+});
 
 const getVersion = () => {
   return app.getVersion();
@@ -83,8 +87,8 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728,
+    width: 800,
+    height: 600,
     icon: getAssetPath('icon.png'),
     titleBarStyle: 'hidden',
     titleBarOverlay: {
@@ -111,21 +115,27 @@ const createWindow = async () => {
       mainWindow.minimize();
     } else {
       mainWindow.show();
-      const [isUpdater, asarInfo] = await asarUpdater.check(getVersion());
-      console.log('isUpdater', isUpdater);
-      console.log(asarInfo);
-      if (isUpdater) {
-        // TODO 通知进行更新
-        if (await asarUpdater.download(asarInfo)) {
-          // TODO 通知需要重启，用户确认
-          // 替换文件，windows 下会启动一个 vbs 脚本进程尝试不停的替换，必须要退出该应用才可以正确的替换
-          console.log('asar is ready to update');
-          // await updateAsarFile(false);
+
+      setTimeout(async () => {
+        const [isUpdater, asarInfo] = await asarUpdater.check(getVersion());
+        console.log('isUpdater', isUpdater);
+        console.log(asarInfo);
+        if (isUpdater) {
+          // TODO 通知进行更新
+          if (await asarUpdater.download(asarInfo)) {
+            // TODO 通知需要重启，用户确认
+            // 替换文件，windows 下会启动一个 vbs 脚本进程尝试不停的替换，必须要退出该应用才可以正确的替换
+            console.log('asar is ready to update');
+            mainWindow?.webContents.send('app-update', 1);
+          } else {
+            // TODO 通知下载更新文件失败
+            console.log('error');
+            mainWindow?.webContents.send('app-update', 2);
+          }
         } else {
-          // TODO 通知下载更新文件失败
-          console.log('error');
+          mainWindow?.webContents.send('app-update', 0);
         }
-      }
+      }, 10000);
     }
   });
 

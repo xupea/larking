@@ -23,4 +23,9 @@ const ActionItem: React.FC<Props> = ({ children, bordered, width }) => {
   );
 };
 
+ActionItem.defaultProps = {
+  bordered: false,
+  width: 0,
+};
+
 export default ActionItem;

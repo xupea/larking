@@ -5,8 +5,6 @@ export default function useVersion() {
 
   useEffect(() => {
     window.electron.ipcRenderer.once('ipc-example', (arg) => {
-      // eslint-disable-next-line no-console
-      console.log(arg);
       setVersion(arg as string);
     });
     window.electron.ipcRenderer.sendMessage('ipc-example', ['ping']);
