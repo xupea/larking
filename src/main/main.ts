@@ -11,7 +11,6 @@
 import path from 'path';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { AsarUpdater } from '@zeromake/electron-asar-updater';
-import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 
 const asarUpdater = new AsarUpdater({
@@ -148,9 +147,6 @@ const createWindow = async () => {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
-
-  const menuBuilder = new MenuBuilder(mainWindow);
-  menuBuilder.buildMenu();
 
   // Open urls in the user's browser
   mainWindow.webContents.setWindowOpenHandler((edata) => {

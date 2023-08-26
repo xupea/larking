@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout } from 'antd';
+import { Anchor, Col, Layout, Row } from 'antd';
 import SearchCenter from 'renderer/business/searchCenter';
 import styles from './index.module.css';
 import RecentVisitHistory from 'renderer/business/resentVisitHistory';
@@ -8,6 +8,7 @@ import TitleBar from '../titlebar';
 import ConversationList from 'renderer/ui/conversationList';
 import useVersion from 'renderer/hooks/useVersion';
 import ActivityBar from '../activityBar';
+import Settings from 'renderer/business/settings';
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -15,7 +16,7 @@ const headerStyle: React.CSSProperties = {
   color: '#fff',
   height: 44,
   width: '100%',
-  backgroundColor: 'black',
+  backgroundColor: '#414c68',
   paddingInline: 0,
   display: 'flex',
   alignItems: 'center',
@@ -35,7 +36,7 @@ const siderStyle1: React.CSSProperties = {
   textAlign: 'center',
   lineHeight: '120px',
   color: '#fff',
-  backgroundColor: '#6ba0e9',
+  backgroundColor: '#414c68',
 };
 
 const siderStyle2: React.CSSProperties = {
@@ -54,20 +55,21 @@ const ClassicLayout: React.FC = () => {
         <TitleBar />
       </Header>
       <Layout>
-        <div className={styles.demoText}>
-          <div>Hello World</div>
-          <div style={{ fontSize: 34 }}>{version}</div>
-        </div>
-        {/* <Sider width={64} style={siderStyle1}>
+        <Sider width={64} style={siderStyle1}>
           <ActivityBar />
         </Sider>
-        <Sider width={288} style={siderStyle2}>
+        {/* <Sider width={288} style={siderStyle2}>
           <ConversationList />
-        </Sider>
-        <Layout style={contentStyle}>
+        </Sider> */}
+        {/* <Layout style={contentStyle}>
           <Content style={contentStyle}>Content</Content>
           <Footer>Footer</Footer>
+          <div className={styles.demoText}>
+            <div>Hello World</div>
+            <div style={{ fontSize: 34 }}>{version}</div>
+          </div>
         </Layout> */}
+        <Settings />
       </Layout>
     </Layout>
   );
