@@ -5,6 +5,7 @@
   height: 28px;
   border-radius: 4px;
   user-select: none;
+  -webkit-app-region: no-drag;
 }
 
 .container:hover {
