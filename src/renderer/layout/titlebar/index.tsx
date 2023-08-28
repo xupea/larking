@@ -9,7 +9,7 @@ const cx = classNames.bind(styles);
 export default function TitleBar() {
   return (
     <div className={cx('titlebarContainer')}>
-      <div className={cx('titlebarDragRegion')}></div>
+      <div className={cx('titlebarDragRegion')} />
       <Left />
       <Center />
       <Right />
