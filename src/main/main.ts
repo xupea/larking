@@ -92,8 +92,8 @@ const createWindow = async () => {
     titleBarStyle: 'hidden',
     titleBarOverlay: {
       height: 44,
-      color: '#3C3C3C',
-      symbolColor: '#3C3C3C',
+      color: '#414c68',
+      symbolColor: '#ffffff',
     },
     webPreferences: {
       preload: app.isPackaged
