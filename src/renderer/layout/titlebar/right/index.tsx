@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import Update from 'renderer/business/update';
+import { isWindows } from 'common/platform';
 import styles from './index.module.css';
 
 const cx = classNames.bind(styles);
@@ -25,6 +26,7 @@ export default function Right() {
           <Update onRelaunch={relaunch} updates={['你好', '还行']} />
         )}
       </div>
+      {isWindows && <div className={cx('window-controls-container')} />}
     </div>
   );
 }
