@@ -67,11 +67,7 @@ exports.default = async function beforePack(context) {
       'Contents/Resources/app.asar'
     );
   } else if (process.platform === 'win32') {
-    asarPath = path.join(
-      appOutDir,
-      `${productFilename}.app`,
-      'Contents/Resources/app.asar'
-    );
+    asarPath = path.join(appOutDir, 'Resources/app.asar');
   }
 
   const keyAsar = 'next.asar';
