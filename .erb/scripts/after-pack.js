@@ -41,7 +41,7 @@ function upload(key, localFile) {
   );
 }
 
-exports.default = async function beforePack(context) {
+exports.default = async function afterPack(context) {
   const { appOutDir, packager } = context;
   const { appInfo } = packager;
   const { productFilename } = appInfo;

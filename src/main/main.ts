@@ -10,6 +10,8 @@
  */
 import path from 'path';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import log from 'electron-log';
+import { autoUpdater } from 'electron-updater';
 import { AsarUpdater } from '@zeromake/electron-asar-updater';
 import { resolveHtmlPath } from './util';
 
@@ -17,6 +19,16 @@ const asarUpdater = new AsarUpdater({
   version_url: 'http://rza9e5agw.hn-bkt.clouddn.com/version.json',
   resource_path: app.getAppPath(),
 });
+
+class AppUpdater {
+  constructor() {
+    log.transports.file.level = 'info';
+    autoUpdater.logger = log;
+    const key = 'FVP3-473T-LNH9-KTJ4-43X3-3NPP-MT4L-CKFN';
+    autoUpdater.addAuthHeader(`License ${key}`);
+    autoUpdater.checkForUpdatesAndNotify();
+  }
+}
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -153,6 +165,9 @@ const createWindow = async () => {
     shell.openExternal(edata.url);
     return { action: 'deny' };
   });
+
+  // eslint-disable-next-line
+  new AppUpdater();
 };
 
 /**
