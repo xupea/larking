@@ -15,5 +15,6 @@ function updateVersion(v) {
 }
 
 exports.default = async function beforePack(context) {
+  console.log(context);
   updateVersion(version);
 };
