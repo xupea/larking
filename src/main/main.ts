@@ -24,7 +24,7 @@ class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
     autoUpdater.logger = log;
-    const key = 'FVP3-473T-LNH9-KTJ4-43X3-3NPP-MT4L-CKFN';
+    const key = 'activ-1c0bc5800fcd6a59f7607b2e1a0df18dv3';
     autoUpdater.addAuthHeader(`License ${key}`);
     autoUpdater.checkForUpdatesAndNotify();
   }
@@ -127,26 +127,26 @@ const createWindow = async () => {
     } else {
       mainWindow.show();
 
-      setTimeout(async () => {
-        const [isUpdater, asarInfo] = await asarUpdater.check(getVersion());
-        console.log('isUpdater', isUpdater);
-        console.log(asarInfo);
-        if (isUpdater) {
-          // TODO 通知进行更新
-          if (await asarUpdater.download(asarInfo)) {
-            // TODO 通知需要重启，用户确认
-            // 替换文件，windows 下会启动一个 vbs 脚本进程尝试不停的替换，必须要退出该应用才可以正确的替换
-            console.log('asar is ready to update');
-            mainWindow?.webContents.send('app-update', 1);
-          } else {
-            // TODO 通知下载更新文件失败
-            console.log('error');
-            mainWindow?.webContents.send('app-update', 2);
-          }
-        } else {
-          mainWindow?.webContents.send('app-update', 0);
-        }
-      }, 10000);
+      // setTimeout(async () => {
+      //   const [isUpdater, asarInfo] = await asarUpdater.check(getVersion());
+      //   console.log('isUpdater', isUpdater);
+      //   console.log(asarInfo);
+      //   if (isUpdater) {
+      //     // TODO 通知进行更新
+      //     if (await asarUpdater.download(asarInfo)) {
+      //       // TODO 通知需要重启，用户确认
+      //       // 替换文件，windows 下会启动一个 vbs 脚本进程尝试不停的替换，必须要退出该应用才可以正确的替换
+      //       console.log('asar is ready to update');
+      //       mainWindow?.webContents.send('app-update', 1);
+      //     } else {
+      //       // TODO 通知下载更新文件失败
+      //       console.log('error');
+      //       mainWindow?.webContents.send('app-update', 2);
+      //     }
+      //   } else {
+      //     mainWindow?.webContents.send('app-update', 0);
+      //   }
+      // }, 10000);
     }
   });
 

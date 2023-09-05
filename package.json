@@ -237,7 +237,7 @@
     "publish": {
       "provider": "keygen",
       "account": "dbf0f25f-1697-4d01-affc-bc47a15624ed",
-      "product": "c777d5ec-eeab-402c-9e66-43e8d01606f7",
+      "product": "b8048f93-90f2-4535-82ba-34a8b4c0607c",
       "channel": "stable"
     }
   },
