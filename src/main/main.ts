@@ -12,18 +12,32 @@ import path from 'path';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
-import { AsarUpdater } from '@zeromake/electron-asar-updater';
 import { resolveHtmlPath } from './util';
 
-const asarUpdater = new AsarUpdater({
-  version_url: 'http://rza9e5agw.hn-bkt.clouddn.com/version.json',
-  resource_path: app.getAppPath(),
-});
-
 class AppUpdater {
-  constructor() {
+  constructor(win: BrowserWindow) {
     log.transports.file.level = 'info';
     autoUpdater.logger = log;
+    autoUpdater.on('checking-for-update', () => {});
+    // autoUpdater.on('update-available', () => {
+    //   win.webContents.send('message', {
+    //     event: 'available',
+    //     data: true,
+    //   });
+    // });
+    autoUpdater.on('update-not-available', () => {});
+    autoUpdater.on('update-downloaded', () => {
+      win.webContents.send('message', {
+        event: 'downloaded',
+        data: true,
+      });
+    });
+    autoUpdater.on('download-progress', (progress) => {
+      win.webContents.send('message', {
+        event: 'progress',
+        data: progress.percent,
+      });
+    });
     autoUpdater.checkForUpdatesAndNotify();
   }
 }
@@ -34,6 +48,10 @@ ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `v${pingPong}`;
   console.log(msgTemplate(arg));
   event.reply('ipc-example', msgTemplate(app.getVersion()));
+});
+
+ipcMain.on('ipc-main', async () => {
+  autoUpdater.quitAndInstall(true);
 });
 
 if (process.env.NODE_ENV === 'production') {
@@ -47,26 +65,6 @@ const isDebug =
 if (isDebug) {
   require('electron-debug')();
 }
-
-const updateAsarFile = async (relaunch: boolean) => {
-  // 有更新文件就进行替换逻辑
-  if (await asarUpdater.hasUpgraded()) {
-    await asarUpdater.upgrade(relaunch);
-    if (relaunch && process.platform !== 'win32') {
-      // 非 windows 平台都是可以直接替换文件的，直接使用 electron 的 app.relaunch()
-      app.relaunch();
-    }
-  }
-  app.exit();
-};
-
-ipcMain.on('ipc-main', () => {
-  updateAsarFile(true);
-});
-
-const getVersion = () => {
-  return app.getVersion();
-};
 
 const installExtensions = async () => {
   const installer = require('electron-devtools-installer');
@@ -124,34 +122,7 @@ const createWindow = async () => {
       mainWindow.minimize();
     } else {
       mainWindow.show();
-
-      // setTimeout(async () => {
-      //   const [isUpdater, asarInfo] = await asarUpdater.check(getVersion());
-      //   console.log('isUpdater', isUpdater);
-      //   console.log(asarInfo);
-      //   if (isUpdater) {
-      //     // TODO 通知进行更新
-      //     if (await asarUpdater.download(asarInfo)) {
-      //       // TODO 通知需要重启，用户确认
-      //       // 替换文件，windows 下会启动一个 vbs 脚本进程尝试不停的替换，必须要退出该应用才可以正确的替换
-      //       console.log('asar is ready to update');
-      //       mainWindow?.webContents.send('app-update', 1);
-      //     } else {
-      //       // TODO 通知下载更新文件失败
-      //       console.log('error');
-      //       mainWindow?.webContents.send('app-update', 2);
-      //     }
-      //   } else {
-      //     mainWindow?.webContents.send('app-update', 0);
-      //   }
-      // }, 10000);
     }
-  });
-
-  mainWindow.on('close', (event) => {
-    event.preventDefault();
-
-    updateAsarFile(false);
   });
 
   mainWindow.on('closed', () => {
@@ -165,7 +136,7 @@ const createWindow = async () => {
   });
 
   // eslint-disable-next-line
-  new AppUpdater();
+  new AppUpdater(mainWindow);
 };
 
 /**

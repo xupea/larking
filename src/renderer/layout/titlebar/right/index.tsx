@@ -1,28 +1,33 @@
-import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
+import { Progress } from 'antd';
 import Update from 'renderer/business/update';
 import { isWindows } from 'common/platform';
+import useUpdate from 'renderer/hooks/useUpdate';
 import styles from './index.module.css';
 
 const cx = classNames.bind(styles);
 
 export default function Right() {
-  const [updateAvailable, setUpdateAvailable] = useState(false);
-
   const relaunch = () => {
     window.electron.ipcRenderer.sendMessage('ipc-main', ['relaunch']);
   };
 
-  useEffect(() => {
-    window.electron.ipcRenderer.on('app-update', (event) => {
-      setUpdateAvailable(event === 1);
-    });
-  }, []);
+  const progress = useUpdate();
 
   return (
     <div className={cx('container', 'right')}>
       <div className={cx('custom-controls')}>
-        {updateAvailable && (
+        {typeof progress === 'number' && (
+          <Progress
+            type="circle"
+            trailColor="#e6f4ff"
+            percent={progress}
+            strokeWidth={20}
+            size={16}
+            format={(number) => `进行中，已完成${number}%`}
+          />
+        )}
+        {progress === 'downloaded' && (
           <Update onRelaunch={relaunch} updates={['你好', '还行']} />
         )}
       </div>
