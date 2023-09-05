@@ -24,8 +24,6 @@ class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
     autoUpdater.logger = log;
-    const key = 'activ-1c0bc5800fcd6a59f7607b2e1a0df18dv3';
-    autoUpdater.addAuthHeader(`License ${key}`);
     autoUpdater.checkForUpdatesAndNotify();
   }
 }
