@@ -15,30 +15,33 @@ import { autoUpdater } from 'electron-updater';
 import { resolveHtmlPath } from './util';
 
 class AppUpdater {
+  isDownloading = false;
+
+  isDownloaded = false;
+
   constructor(win: BrowserWindow) {
     log.transports.file.level = 'info';
     autoUpdater.logger = log;
-    autoUpdater.on('checking-for-update', () => {});
-    // autoUpdater.on('update-available', () => {
-    //   win.webContents.send('message', {
-    //     event: 'available',
-    //     data: true,
-    //   });
-    // });
-    autoUpdater.on('update-not-available', () => {});
     autoUpdater.on('update-downloaded', () => {
+      this.isDownloaded = true;
       win.webContents.send('message', {
         event: 'downloaded',
         data: true,
       });
     });
     autoUpdater.on('download-progress', (progress) => {
+      this.isDownloading = true;
       win.webContents.send('message', {
         event: 'progress',
         data: progress.percent,
       });
     });
     autoUpdater.checkForUpdatesAndNotify();
+
+    setInterval(() => {
+      if (this.isDownloaded || this.isDownloading) return;
+      autoUpdater.checkForUpdatesAndNotify();
+    }, 24 * 60 * 60 * 1000);
   }
 }
 
