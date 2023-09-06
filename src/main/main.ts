@@ -51,7 +51,7 @@ ipcMain.on('ipc-example', async (event, arg) => {
 });
 
 ipcMain.on('ipc-main', async () => {
-  autoUpdater.quitAndInstall(true);
+  autoUpdater.quitAndInstall(true, true);
 });
 
 if (process.env.NODE_ENV === 'production') {
