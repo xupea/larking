@@ -36,12 +36,12 @@ class AppUpdater {
         data: progress.percent,
       });
     });
-    autoUpdater.checkForUpdatesAndNotify();
+    autoUpdater.checkForUpdates();
 
     setInterval(() => {
       if (this.isDownloaded || this.isDownloading) return;
-      autoUpdater.checkForUpdatesAndNotify();
-    }, 24 * 60 * 60 * 1000);
+      autoUpdater.checkForUpdates();
+    }, 60 * 60 * 1000);
   }
 }
 
@@ -54,7 +54,7 @@ ipcMain.on('ipc-example', async (event, arg) => {
 });
 
 ipcMain.on('ipc-main', async () => {
-  autoUpdater.quitAndInstall(true, true);
+  autoUpdater.quitAndInstall(false, true);
 });
 
 if (process.env.NODE_ENV === 'production') {
