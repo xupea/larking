@@ -1,22 +1,35 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Button, Popover } from 'antd';
 import { GiftOutlined } from '@ant-design/icons';
 import ActionItem from 'renderer/ui/actionItem';
 
-type Props = {
-  onRelaunch: () => void;
-  updates: string[];
-};
+const Update: FC = () => {
+  const [version, setVersion] = useState('');
+  const [updates, setUpdates] = useState([]);
 
-const Update: FC<Props> = ({ onRelaunch, updates }) => {
-  const text = <span>程序已经准备就绪</span>;
+  const text = <span>Larking v{version} 已准备就绪</span>;
+
+  const relaunch = () => {
+    window.electron.ipcRenderer.sendMessage('ipc-main', ['relaunch']);
+  };
+
+  const fetchData = async () => {
+    const res = await fetch('http://rza9e5agw.hn-bkt.clouddn.com/version.json');
+    const update = await res.json();
+    setUpdates(update.content || []);
+    setVersion(update.version);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const content = (
     <div>
       {updates.map((update) => (
-        <p>{update}</p>
+        <p>- {update}</p>
       ))}
-      <Button onClick={() => onRelaunch()}>立即升级</Button>
+      <Button onClick={() => relaunch()}>重启升级</Button>
     </div>
   );
 

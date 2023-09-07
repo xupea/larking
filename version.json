@@ -1,4 +1,4 @@
 {
   "version": "0.0.0",
-  "download_url": "next.asar"
+  "content": ["更新内容1", "更新内容2", "更新内容3", "更新内容4"]
 }

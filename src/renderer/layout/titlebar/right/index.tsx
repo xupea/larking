@@ -8,10 +8,6 @@ import styles from './index.module.css';
 const cx = classNames.bind(styles);
 
 export default function Right() {
-  const relaunch = () => {
-    window.electron.ipcRenderer.sendMessage('ipc-main', ['relaunch']);
-  };
-
   const progress = useUpdate();
 
   return (
@@ -27,9 +23,7 @@ export default function Right() {
             format={(number) => `进行中，已完成${number}%`}
           />
         )}
-        {progress === 'downloaded' && (
-          <Update onRelaunch={relaunch} updates={['你好', '还行']} />
-        )}
+        {true && <Update />}
       </div>
       {isWindows && <div className={cx('window-controls-container')} />}
     </div>
