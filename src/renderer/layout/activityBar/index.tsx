@@ -27,7 +27,7 @@ const data1 = [
   },
   {
     name: '1',
-    icon: <AppleOutlined />,
+    icon: <GoogleOutlined />,
   },
   {
     name: '1',
@@ -54,10 +54,12 @@ const data1 = [
 const data2 = [
   {
     name: '1',
+    type: 'account',
     icon: <UserOutlined />,
   },
   {
     name: '1',
+    type: 'settings',
     icon: <SettingOutlined />,
   },
 ];
@@ -68,9 +70,10 @@ const ActivityBar: FC = () => {
   const [max, setMax] = useState(0);
   const appDispatch = useAppDispatch();
 
-  const handleChange = () => {
-    console.log('handleChange');
-    appDispatch(changeSettings());
+  const handleChange = (type: string) => {
+    if (type === 'settings') {
+      appDispatch(changeSettings());
+    }
   };
 
   useLayoutEffect(() => {

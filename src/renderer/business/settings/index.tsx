@@ -8,6 +8,7 @@ import {
 import type { MenuProps } from 'antd';
 import useVersion from 'renderer/hooks/useVersion';
 import AnchorItem from '../anchorItem';
+import styles from './index.module.css';
 
 const { Header, Sider, Content } = Layout;
 
@@ -94,7 +95,7 @@ const Settings = () => {
   };
 
   return (
-    <Layout>
+    <Layout className={styles.layout}>
       <Sider width={256} style={siderStyle}>
         <Menu
           style={{ width: 256, overflowY: 'auto' }}

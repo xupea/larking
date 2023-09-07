@@ -9,7 +9,7 @@ const cx = classNames.bind(styles);
 type Props = {
   data: any[];
   max?: number;
-  onClick?: () => void;
+  onClick?: (type: string) => void;
 };
 
 const ActionBar: FC<Props> = ({ data, max, onClick }) => {
@@ -43,9 +43,14 @@ const ActionBar: FC<Props> = ({ data, max, onClick }) => {
     show.push(more);
   }
 
-  const contentShow = show.map((d, idx) => (
-    <li key={idx} className={cx('action-item')} onClick={() => onClick?.()}>
-      <div className={cx('action-item-inner')}>{d.icon}</div>
+  const contentShow = show.map(({ type, icon }) => (
+    <li
+      key={type}
+      role="presentation"
+      className={cx('action-item')}
+      onClick={() => onClick?.(type)}
+    >
+      <div className={cx('action-item-inner')}>{icon}</div>
     </li>
   ));
 
