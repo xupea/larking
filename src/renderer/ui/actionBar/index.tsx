@@ -9,9 +9,10 @@ const cx = classNames.bind(styles);
 type Props = {
   data: any[];
   max?: number;
+  onClick?: () => void;
 };
 
-const ActionBar: FC<Props> = ({ data, max }) => {
+const ActionBar: FC<Props> = ({ data, max, onClick }) => {
   const content = (
     <div>
       <p>Content</p>
@@ -43,7 +44,7 @@ const ActionBar: FC<Props> = ({ data, max }) => {
   }
 
   const contentShow = show.map((d, idx) => (
-    <li key={idx} className={cx('action-item')}>
+    <li key={idx} className={cx('action-item')} onClick={() => onClick?.()}>
       <div className={cx('action-item-inner')}>{d.icon}</div>
     </li>
   ));

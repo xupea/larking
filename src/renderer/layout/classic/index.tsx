@@ -1,5 +1,5 @@
 import React from 'react';
-import { Anchor, Col, Layout, Row } from 'antd';
+import { Anchor, Col, Drawer, Layout, Row } from 'antd';
 import SearchCenter from 'renderer/business/searchCenter';
 import styles from './index.module.css';
 import RecentVisitHistory from 'renderer/business/resentVisitHistory';
@@ -9,6 +9,8 @@ import ConversationList from 'renderer/ui/conversationList';
 import useVersion from 'renderer/hooks/useVersion';
 import ActivityBar from '../activityBar';
 import Settings from 'renderer/business/settings';
+import { useAppDispatch, useAppSelector } from 'renderer/redux/hooks';
+import { changeSettings } from 'renderer/redux/counterSlice';
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -47,7 +49,14 @@ const siderStyle2: React.CSSProperties = {
 };
 
 const ClassicLayout: React.FC = () => {
-  const version = useVersion();
+  // const version = useVersion();
+
+  const open = useAppSelector((state) => state.counter.open);
+  const appDispatch = useAppDispatch();
+  console.log(open);
+  const onClose = () => {
+    appDispatch(changeSettings());
+  };
 
   return (
     <Layout className={styles.layout}>
@@ -69,7 +78,17 @@ const ClassicLayout: React.FC = () => {
             <div style={{ fontSize: 34 }}>{version}</div>
           </div>
         </Layout> */}
-        <Settings />
+        <Drawer
+          title="Settings"
+          contentWrapperStyle={{ width: '100%', left: 64, top: 44 }}
+          bodyStyle={{ padding: 0 }}
+          placement="right"
+          mask={false}
+          open={open}
+          onClose={onClose}
+        >
+          <Settings />
+        </Drawer>
       </Layout>
     </Layout>
   );

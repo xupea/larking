@@ -10,7 +10,9 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import ActionBar from 'renderer/ui/actionBar';
+import { useAppDispatch } from 'renderer/redux/hooks';
 import styles from './index.module.css';
+import { changeSettings } from 'renderer/redux/counterSlice';
 
 const cx = classNames.bind(styles);
 
@@ -64,12 +66,16 @@ const ActivityBar: FC = () => {
   const elementRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
   const [max, setMax] = useState(0);
+  const appDispatch = useAppDispatch();
+
+  const handleChange = () => {
+    console.log('handleChange');
+    appDispatch(changeSettings());
+  };
 
   useLayoutEffect(() => {
     const handleResize = () => {
-      // console.log(elementRef.current.offsetHeight);
       const m = Math.floor((window.innerHeight - 44 - 64 * 2) / 64);
-      console.log(m - 1);
       setMax(m - 1);
       setHeight(elementRef.current.offsetHeight);
     };
@@ -87,7 +93,7 @@ const ActivityBar: FC = () => {
         <ActionBar max={max} data={data1} />
       </div>
       <div>
-        <ActionBar data={data2} />
+        <ActionBar data={data2} onClick={handleChange} />
       </div>
     </div>
   );
