@@ -10,43 +10,59 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import ActionBar from 'renderer/ui/actionBar';
+import { changeSettings } from 'renderer/redux/counterSlice';
 import { useAppDispatch } from 'renderer/redux/hooks';
 import styles from './index.module.css';
-import { changeSettings } from 'renderer/redux/counterSlice';
 
 const cx = classNames.bind(styles);
 
 const data1 = [
   {
     name: '1',
+    type: 'message',
+    title: '消息',
     icon: <AppleOutlined />,
   },
   {
     name: '1',
+    type: 'video',
+    title: '视频会议',
     icon: <IeOutlined />,
   },
   {
     name: '1',
+    type: 'calendar',
+    title: '日历',
     icon: <GoogleOutlined />,
   },
   {
     name: '1',
+    type: 'contacts',
+    title: '通信录',
     icon: <GithubOutlined />,
   },
   {
     name: '1',
+    type: 'task',
+    title: '任务',
     icon: <QqOutlined />,
   },
   {
     name: '1',
+    type: 'table',
+    title: '表格',
     icon: <AppleOutlined />,
   },
   {
     name: '1',
+    type: 'favorite',
+    title: '收藏',
     icon: <GoogleOutlined />,
   },
   {
     name: '1',
+    type: 'work',
+    title: '工作台',
     icon: <AppleOutlined />,
   },
 ];
@@ -55,11 +71,13 @@ const data2 = [
   {
     name: '1',
     type: 'account',
+    title: '账户',
     icon: <UserOutlined />,
   },
   {
     name: '1',
     type: 'settings',
+    title: '设置',
     icon: <SettingOutlined />,
   },
 ];

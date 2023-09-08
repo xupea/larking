@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Button, Layout } from 'antd';
 import styles from './index.module.css';
 
-const { Header, Footer, Content } = Layout;
+const { Header, Content } = Layout;
 
 const headerStyle: React.CSSProperties = {
   textAlign: 'center',
@@ -22,15 +22,6 @@ const contentStyle: React.CSSProperties = {
   lineHeight: '120px',
   color: '#fff',
   backgroundColor: '#108ee9',
-};
-
-const footerStyle: React.CSSProperties = {
-  textAlign: 'center',
-  color: '#fff',
-  height: 44,
-  paddingInline: 50,
-  lineHeight: '44px',
-  backgroundColor: '#7dbcea',
 };
 
 const Login: React.FC = () => {
@@ -61,11 +52,9 @@ const Login: React.FC = () => {
             level="H"
             includeMargin={false}
           />
-
           <Button onClick={() => toMain()}>跳过登录</Button>
         </div>
       </Content>
-      <Footer style={footerStyle}></Footer>
     </Layout>
   );
 };

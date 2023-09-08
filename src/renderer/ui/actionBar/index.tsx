@@ -43,14 +43,17 @@ const ActionBar: FC<Props> = ({ data, max, onClick }) => {
     show.push(more);
   }
 
-  const contentShow = show.map(({ type, icon }) => (
+  const contentShow = show.map(({ type, icon, title }) => (
     <li
       key={type}
       role="presentation"
       className={cx('action-item')}
       onClick={() => onClick?.(type)}
     >
-      <div className={cx('action-item-inner')}>{icon}</div>
+      <div className={cx('action-item-inner')}>
+        <div className={cx('action-item-inner-icon')}>{icon}</div>
+        <span className={cx('action-item-inner-title')}>{title}</span>
+      </div>
     </li>
   ));
 
