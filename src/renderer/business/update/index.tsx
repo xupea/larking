@@ -14,7 +14,9 @@ const Update: FC = () => {
   };
 
   const fetchData = async () => {
-    const res = await fetch('http://rza9e5agw.hn-bkt.clouddn.com/version.json');
+    const res = await fetch(
+      `http://rza9e5agw.hn-bkt.clouddn.com/version.json?r=${Math.random()}`
+    );
     const update = await res.json();
     setUpdates(update.content || []);
     setVersion(update.version);

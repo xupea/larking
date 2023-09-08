@@ -23,7 +23,7 @@ export default function Right() {
             format={(number) => `进行中，已完成${number}%`}
           />
         )}
-        {true && <Update />}
+        {progress === 'download' && <Update />}
       </div>
       {isWindows && <div className={cx('window-controls-container')} />}
     </div>
