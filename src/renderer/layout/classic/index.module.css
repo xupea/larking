@@ -20,3 +20,14 @@
     #7a2c9e 129.35%
   );
 }
+
+.header {
+  background-color: var(--activity-background-color) !important;
+}
+
+.sider {
+  text-align: center;
+  line-height: 120px;
+  color: #fff;
+  background-color: var(--activity-background-color) !important;
+}

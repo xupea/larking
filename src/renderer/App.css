@@ -2,6 +2,21 @@
  * @NOTE: Prepend a `~` to css file paths that are in your node_modules
  *        See https://github.com/webpack-contrib/sass-loader#imports
  */
+:root {
+  --activity-background-color: #414c68;
+  --activity-color: #fff;
+}
+
+:root[data-theme=blue2] {
+  --activity-background-color: blue;
+  --activity-color: #fff;
+}
+
+:root[data-theme=grey] {
+  --activity-background-color: grey;
+  --activity-color: #fff;
+}
+
 body {
   position: relative;
   color: white;

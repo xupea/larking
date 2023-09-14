@@ -1,16 +1,16 @@
 import React from 'react';
 import { Anchor, Col, Drawer, Layout, Row } from 'antd';
 import SearchCenter from 'renderer/business/searchCenter';
-import styles from './index.module.css';
 import RecentVisitHistory from 'renderer/business/resentVisitHistory';
 import QuickAction from 'renderer/business/quickAction';
 import TitleBar from '../titlebar';
 import ConversationList from 'renderer/ui/conversationList';
 import useVersion from 'renderer/hooks/useVersion';
-import ActivityBar from '../activityBar';
 import Settings from 'renderer/business/settings';
 import { useAppDispatch, useAppSelector } from 'renderer/redux/hooks';
 import { changeSettings } from 'renderer/redux/counterSlice';
+import ActivityBar from '../activityBar';
+import styles from './index.module.css';
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -34,20 +34,6 @@ const contentStyle: React.CSSProperties = {
   backgroundColor: '#108ee9',
 };
 
-const siderStyle1: React.CSSProperties = {
-  textAlign: 'center',
-  lineHeight: '120px',
-  color: '#fff',
-  backgroundColor: '#414c68',
-};
-
-const siderStyle2: React.CSSProperties = {
-  textAlign: 'center',
-  lineHeight: '120px',
-  color: '#fff',
-  backgroundColor: '#3ba0e9',
-};
-
 const ClassicLayout: React.FC = () => {
   // const version = useVersion();
 
@@ -60,11 +46,11 @@ const ClassicLayout: React.FC = () => {
 
   return (
     <Layout className={styles.layout}>
-      <Header style={headerStyle}>
+      <Header className={styles.header} style={headerStyle}>
         <TitleBar />
       </Header>
       <Layout>
-        <Sider width={64} style={siderStyle1}>
+        <Sider width={64} className={styles.sider}>
           <ActivityBar />
         </Sider>
         {/* <Sider width={288} style={siderStyle2}>

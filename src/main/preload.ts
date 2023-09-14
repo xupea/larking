@@ -1,6 +1,11 @@
 // Disable no-unused-vars, broken for spread args
 /* eslint no-unused-vars: off */
-import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
+import {
+  contextBridge,
+  ipcRenderer,
+  IpcRendererEvent,
+  webFrame,
+} from 'electron';
 
 export type Channels = 'ipc-example' | 'app-update' | 'ipc-main' | 'message';
 
@@ -22,6 +27,8 @@ const electronHandler = {
       ipcRenderer.once(channel, (_event, ...args) => func(...args));
     },
   },
+  setZoomFactor: (scale: number) => webFrame.setZoomFactor(scale),
+  getZoomFactor: () => webFrame.getZoomFactor(),
 };
 
 contextBridge.exposeInMainWorld('electron', electronHandler);

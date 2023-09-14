@@ -1,4 +1,4 @@
-import { Layout, Menu } from 'antd';
+import { Button, Layout, Menu } from 'antd';
 import React, { useRef } from 'react';
 import {
   AppstoreOutlined,
@@ -70,12 +70,40 @@ const items: MenuProps['items'] = [
   getItem('关于', '10', <SettingOutlined />),
 ];
 
+const Theme = () => {
+  const changeTheme = (type: string) => {
+    const html = document.querySelector(':root');
+    html?.setAttribute('data-theme', type);
+  };
+
+  const changeScale = (scale: number) => {
+    window.electron.setZoomFactor(scale);
+  };
+
+  return (
+    <div>
+      <div>设置主题色</div>
+      <div>
+        <Button onClick={() => changeTheme('blue1')}>深邃蓝</Button>
+        <Button onClick={() => changeTheme('blue2')}>经典蓝</Button>
+        <Button onClick={() => changeTheme('grey')}>简约灰</Button>
+      </div>
+      <div>窗口缩放</div>
+      <div>
+        <Button onClick={() => changeScale(1)}>100%（默认）</Button>
+        <Button onClick={() => changeScale(1.1)}>110%</Button>
+        <Button onClick={() => changeScale(1.25)}>125%</Button>
+      </div>
+    </div>
+  );
+};
+
 const Settings = () => {
   const itemsEls = useRef<HTMLDivElement[]>([]);
   const version = useVersion();
 
   const data = [
-    { title: '通用', content: '1' },
+    { title: '通用', content: <Theme /> },
     { title: '隐私', content: '2' },
     { title: '效率', content: '3' },
     { title: '通知', content: '4' },
@@ -115,7 +143,7 @@ const Settings = () => {
                 }}
                 key={title}
                 title={`${title}`}
-                content={`${content}`}
+                content={content}
               />
             );
           })}
