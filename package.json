@@ -241,10 +241,8 @@
       "./version.json"
     ],
     "publish": {
-      "provider": "keygen",
-      "account": "dbf0f25f-1697-4d01-affc-bc47a15624ed",
-      "product": "b8048f93-90f2-4535-82ba-34a8b4c0607c",
-      "channel": "stable"
+      "provider": "generic",
+      "url": "https://test.com/app-updates/"
     }
   },
   "collective": {

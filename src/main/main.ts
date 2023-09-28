@@ -21,6 +21,10 @@ class AppUpdater {
 
   constructor(win: BrowserWindow) {
     log.transports.file.level = 'info';
+    autoUpdater.setFeedURL({
+      url: 'http://10.0.0.152:3000/',
+      provider: 'generic',
+    });
     autoUpdater.logger = log;
     autoUpdater.on('update-downloaded', () => {
       this.isDownloaded = true;
