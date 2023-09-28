@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AutoSizer, List } from 'react-virtualized';
 import { Avatar, message } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import styles from './index.module.css';
 
 interface UserItem {
@@ -40,7 +41,13 @@ const ConversationList: React.FC = () => {
   function rowRenderer({ key, index, style }) {
     return (
       <div key={key} className={styles.row} style={style}>
-        <div>{data[index].email}</div>
+        <div>
+          <Avatar shape="square" size={50} icon={<UserOutlined />} />
+        </div>
+        <div className={styles.body}>
+          <div className={styles.title}>{data[index].email}</div>
+          <div className={styles.content}>{data[index].email}</div>
+        </div>
       </div>
     );
   }
