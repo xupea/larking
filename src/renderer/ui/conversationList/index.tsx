@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AutoSizer, List } from 'react-virtualized';
-import { Avatar, message } from 'antd';
+import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import styles from './index.module.css';
 

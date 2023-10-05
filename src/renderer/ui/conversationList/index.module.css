@@ -10,23 +10,31 @@
   padding: 0 10px;
   border-bottom: 1px solid #e0e0e0;
   gap: 10px;
+  cursor: pointer;
 }
 
 .row:hover {
-  background-color: grey;
+  background-color: #eeeeee;
 }
 
 .body {
   display: flex;
-  align-items: center;
   flex-direction: column;
+  text-align: start;
   gap: 10px;
+  width: 100%;
+  overflow: hidden;
+  user-select: none;
 }
 
 .title {
   color: black;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .content {
-  color: gray;
+  color: #616161;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
