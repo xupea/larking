@@ -1,13 +1,9 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import TitleBar from 'renderer/layout/titlebar';
 import styles from './index.module.css';
 import ConversationList from '../conversationList';
 
-type Props = {
-  title: string;
-};
-
-export const SplitViewView: React.FC<Props> = ({ title, children }) => {
+export const SplitViewView: React.FC<PropsWithChildren> = ({ children }) => {
   return <div className={styles['split-view-view']}>{children}</div>;
 };
 

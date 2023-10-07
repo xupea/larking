@@ -15,6 +15,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'error',
     'react/function-component-definition': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
+    'no-plusplus': 'off',
   },
   parserOptions: {
     ecmaVersion: 2020,

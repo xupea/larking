@@ -10,16 +10,7 @@ import useVersion from 'renderer/hooks/useVersion';
 import AnchorItem from '../anchorItem';
 import styles from './index.module.css';
 
-const { Header, Sider, Content } = Layout;
-
-const headerStyle: React.CSSProperties = {
-  textAlign: 'center',
-  color: '#fff',
-  height: 64,
-  paddingInline: 50,
-  lineHeight: '64px',
-  backgroundColor: '#7dbcea',
-};
+const { Sider, Content } = Layout;
 
 const contentStyle: React.CSSProperties = {
   textAlign: 'center',
@@ -116,8 +107,8 @@ const Settings = () => {
     { title: '关于', content: version },
   ];
 
-  const clickHandler = ({ key }) => {
-    itemsEls.current[key].scrollIntoView({
+  const clickHandler: MenuProps['onClick'] = (info) => {
+    itemsEls.current[info.key as unknown as number].scrollIntoView({
       behavior: 'smooth',
     });
   };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AutoSizer, List } from 'react-virtualized';
+import { AutoSizer, List, ListRowRenderer } from 'react-virtualized';
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import styles from './index.module.css';
@@ -26,19 +26,18 @@ const fakeDataUrl =
 const ConversationList: React.FC = () => {
   const [data, setData] = useState<UserItem[]>([]);
 
-  const appendData = () => {
-    fetch(fakeDataUrl)
-      .then((res) => res.json())
-      .then((body) => {
-        setData(data.concat(body.results));
-      });
-  };
-
   useEffect(() => {
+    const appendData = () => {
+      fetch(fakeDataUrl)
+        .then((res) => res.json())
+        .then((body) => {
+          setData(data.concat(body.results));
+        });
+    };
     appendData();
   }, []);
 
-  function rowRenderer({ key, index, style }) {
+  const rowRenderer: ListRowRenderer = ({ key, index, style }) => {
     return (
       <div key={key} className={styles.row} style={style}>
         <div>
@@ -50,7 +49,7 @@ const ConversationList: React.FC = () => {
         </div>
       </div>
     );
-  }
+  };
 
   return (
     <div className={styles.container}>

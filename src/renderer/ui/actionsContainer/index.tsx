@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { Button } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import classNames from 'classnames/bind';
@@ -6,11 +6,7 @@ import styles from './index.module.css';
 
 const cx = classNames.bind(styles);
 
-type Props = {
-  title?: string;
-};
-
-const ActionItem: React.FC<Props> = ({ children }) => {
+const ActionItem: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <li className={cx(['action-item', 'menu-entry'])} role="presentation">
       {children}
@@ -37,7 +33,7 @@ const Quick = () => {
 
 export default function ActionsContainer() {
   return (
-    <ul className={cx('actions-container')} role="toolbar">
+    <ul className={cx('actions-container')}>
       <SearchCenter />
       <Quick />
     </ul>
