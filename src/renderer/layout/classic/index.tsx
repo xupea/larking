@@ -1,15 +1,12 @@
 import React from 'react';
-import { Anchor, Col, Drawer, Layout, Row } from 'antd';
-import SearchCenter from 'renderer/business/searchCenter';
-import RecentVisitHistory from 'renderer/business/resentVisitHistory';
-import QuickAction from 'renderer/business/quickAction';
-import TitleBar from '../titlebar';
+import { Drawer, Layout } from 'antd';
 import ConversationList from 'renderer/ui/conversationList';
 import useVersion from 'renderer/hooks/useVersion';
 import Settings from 'renderer/business/settings';
 import { useAppDispatch, useAppSelector } from 'renderer/redux/hooks';
 import { changeSettings } from 'renderer/redux/counterSlice';
 import ActivityBar from '../activityBar';
+import TitleBar from '../titlebar';
 import styles from './index.module.css';
 
 const { Header, Sider, Content, Footer } = Layout;
@@ -46,7 +43,6 @@ const ClassicLayout: React.FC = () => {
 
   const open = useAppSelector((state) => state.counter.open);
   const appDispatch = useAppDispatch();
-  console.log(open);
   const onClose = () => {
     appDispatch(changeSettings());
   };

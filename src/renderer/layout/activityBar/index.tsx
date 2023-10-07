@@ -84,7 +84,7 @@ const data2 = [
 
 const ActivityBar: FC = () => {
   const elementRef = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState(0);
+  // const [height, setHeight] = useState(0);
   const [max, setMax] = useState(0);
   const appDispatch = useAppDispatch();
 
@@ -98,7 +98,7 @@ const ActivityBar: FC = () => {
     const handleResize = () => {
       const m = Math.floor((window.innerHeight - 44 - 64 * 2) / 64);
       setMax(m - 1);
-      setHeight(elementRef.current.offsetHeight);
+      // setHeight(elementRef.current.offsetHeight);
     };
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -111,10 +111,10 @@ const ActivityBar: FC = () => {
   return (
     <div ref={elementRef} className={styles.content}>
       <div className={cx('composite-bar')}>
-        <ActionBar max={max} data={data1} />
+        <ActionBar max={max} data={data1} onClick={() => {}} />
       </div>
       <div>
-        <ActionBar data={data2} onClick={handleChange} />
+        <ActionBar max={data2.length} data={data2} onClick={handleChange} />
       </div>
     </div>
   );
