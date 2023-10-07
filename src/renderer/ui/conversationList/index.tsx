@@ -27,14 +27,15 @@ const ConversationList: React.FC = () => {
   const [data, setData] = useState<UserItem[]>([]);
 
   useEffect(() => {
-    const appendData = () => {
-      fetch(fakeDataUrl)
+    (async () => {
+      const result = await fetch(fakeDataUrl)
         .then((res) => res.json())
         .then((body) => {
-          setData(data.concat(body.results));
+          return body.results;
         });
-    };
-    appendData();
+
+      setData(result);
+    })();
   }, []);
 
   const rowRenderer: ListRowRenderer = ({ key, index, style }) => {

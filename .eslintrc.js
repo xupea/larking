@@ -16,6 +16,7 @@ module.exports = {
     'react/function-component-definition': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
     'no-plusplus': 'off',
+    'max-lines': ['error', { max: 300, skipBlankLines: true }],
   },
   parserOptions: {
     ecmaVersion: 2020,
